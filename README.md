@@ -10,3 +10,5 @@ The data used are in the *dataproject.txt* file.
 
 The R script used is the *project.R* file. 
 
+The project report can be found at the following adress : https://fr.overleaf.com/read/jsmknmcxzwjm and in the *LMAT1271__Projet.pdf* file. 
+
