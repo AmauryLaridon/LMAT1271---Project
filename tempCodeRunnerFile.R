@@ -17,7 +17,6 @@ set.seed(2023)
 n <- 20 # taille n de l'échantillon
 a_0 <- 2 # valeur initiale arbitraire de alpha_0  
 b_0 <- 3 # valeur initiale arbitraire de beta_0 
-p <- 0.95 # ordre du quantile d'intérêt. 
 
 # définition de la pdf fonction f_{alpha, beta}
 pdf_f <- function(t, alpha, beta) {
@@ -32,23 +31,7 @@ pdf_f <- function(t, alpha, beta) {
 
 sample <- rep(0, n) # création d'un vecteur de longueur n vide dans lequel on va mettre de manière aléatoire des données générées à partir de f_{alpha,beta}
 
-# insère pour chaque valeur de l'échantillon la valeur aléatoire donnée par le pdf. 
-for (i in (0:n)) {
-   #t = sample(x = -1:1:0.1, size = 1)
-   t = runif(1,0,1)
-   f = pdf_f(t, a_0, b_0)
-   sample[i] = f
+for (i in sample) {
+   t = sample(x = -1:1:0.1, size = 1)
+   print(t) 
 }
-
-# fonction de calcul du quantile d'ordre p issue de la partie 1.1 (a)
-q_p <- function(p, alpha, beta) {
-    q = ((1-(1-p)^(1/beta))^(1/alpha))
-    return(q)
-}
-
-# première méthode de calcul du quantile 
-q_S = q_p(p, a_0, b_0)
-q_S
-
-
-### ??? Je ne vois pas trop comment coder le calcul explicite des paramètres alpha_M/L et beta_M/L ??? ###
