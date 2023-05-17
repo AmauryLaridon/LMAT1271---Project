@@ -181,7 +181,7 @@ for (i in 1:length(n_value)) {
 
 #Graphiques
 
-print(results[,,])
+print(results[3,,])
 
 #Biais
 plot(n_value,results[1,1,],xlab="n",ylab="Bias",main="Bias of q_s") #q_s
@@ -197,3 +197,7 @@ plot(n_value,results[2,3,],xlab="n",ylab="Variance",main="Variance of q_l") #q_l
 plot(n_value,results[3,1,],xlab="n",ylab="MSE",main="MSE of q_s") #q_s
 plot(n_value,results[3,2,],xlab="n",ylab="MSE",main="MSE of q_m") #q_m
 plot(n_value,results[3,3,],xlab="n",ylab="MSE",main="MSE of q_l") #q_l
+
+##
+
+
