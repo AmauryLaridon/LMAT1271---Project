@@ -13,7 +13,7 @@ set.seed(2023)
 
 ######################### - Partie 1.3 Simulations - ###########################
 
-n <- 400 # size of the sampling
+n <- 20 # size of the sampling
 nbr_replication <- 100 # number of replication of the sampling process
 a_0 <- 0.5 # alpha parameter of the density function of T
 b_0 <- 1.2 # beta parameter of the density function of T
@@ -41,8 +41,7 @@ q_p <- function(p) {
 q_s <- function(T_i) {
   size <- length(T_i)
   T_sort <- sort(T_i)
-  return (T_sort[ceiling(0.95*size)]+(T_sort[floor(0.95*size)]
-                        -T_sort[ceiling(0.95*size)])/2)
+  return (T_sort[ceiling(0.95*size)]+T_sort[floor(0.95*size)])/2
 }
 
 #Estimator of a_m and b_m, using the method of moments
@@ -64,7 +63,7 @@ q_l <- function(T_i) {
   #puis on calcule b_L et q_L
   f1 <- function(a) {
     return (1/a + (1/(sum(log(1-T_i^a)))+(1/n))*sum((T_i^(a)
-                                  *log(T_i))/(1-T_i^(a)))+(1/n)*sum(log(T_i)))
+                                                     *log(T_i))/(1-T_i^(a)))+(1/n)*sum(log(T_i)))
   }
   solution_l <- uniroot(f1,c(1e-9,10))
   a_l <- solution_l$root
@@ -95,7 +94,7 @@ generate_estimation_q_p <- function(affichage) {
   estimation_q_l <- estimation_q_p[3,]
   
   
-### - 1.3 (c) - ###
+  ### - 1.3 (c) - ###
   
   #Approximation de l'espérance par la moyenne empirique
   esperance_q_s <- mean(estimation_q_s)
@@ -116,43 +115,48 @@ generate_estimation_q_p <- function(affichage) {
   mse_s <- bias_s^2 + variance_s
   mse_m <- bias_m^2 + variance_m
   mse_l <- bias_l^2 + variance_l
-
+  
   if (affichage == TRUE) {
     hist(estimation_q_s,breaks=10, main="")
     title(main = paste("Histogram of estimated q_s\n", "n =", n, " N =", 
-        nbr_replication, " a_0 =", a_0, " b_0 =", b_0), sub= paste("Biais =", 
-        round(bias_s, digits=4)  , " Variance=", round(variance_s, digits=4), 
-        " MSE=", round(mse_s, digits=4)))
+                    nbr_replication, " a_0 =", a_0, " b_0 =", b_0), 
+                    sub= paste("Biais =", round(bias_s, digits=4), 
+                    " Variance=", round(variance_s, digits=4), " MSE=",
+                    round(mse_s, digits=4)))
     boxplot(estimation_q_s, xlab = "q_s", ylab="Value")
     title(main = paste("Boxplot of estimated q_s\n","n =", n, " N =", 
-        nbr_replication, " a_0 =", a_0, " b_0 =", b_0), sub= paste("Biais =", 
-        round(bias_s, digits=4)  , " Variance=", round(variance_s, digits=4), 
-        " MSE=", round(mse_s, digits=4)))
+                    nbr_replication, " a_0 =", a_0, " b_0 =", b_0),
+                    sub= paste("Biais =", round(bias_s, digits=4), 
+                    " Variance=", round(variance_s, digits=4), " MSE=",
+                    round(mse_s, digits=4)))
     
     
     hist(estimation_q_m,breaks=10, main = "")
     title(main = paste("Histogram of estimated q_m\n","n =", n, " N =", 
-        nbr_replication, " a_0 =", a_0, " b_0 =", b_0), sub= paste("Biais =", 
-        round(bias_m, digits=4)  , " Variance=", round(variance_m, digits=4), 
-        " MSE=", round(mse_m, digits=4)))
+                    nbr_replication, " a_0 =", a_0, " b_0 =", b_0), 
+                    sub= paste("Biais =", round(bias_m, digits=4), 
+                    " Variance=", round(variance_m, digits=4), " MSE=",
+                    round(mse_m, digits=4)))
     boxplot(estimation_q_m, xlab = "q_m", main = "", ylab="Value")
     title(main = paste("Boxplot of estimated q_m\n","n =", n, " N =", 
-        nbr_replication, " a_0 =", a_0, " b_0 =", b_0), sub= paste("Biais =", 
-        round(bias_m, digits=4)  , " Variance=", round(variance_m, digits=4), 
-        " MSE=", round(mse_m, digits=4)))
+                    nbr_replication, " a_0 =", a_0, " b_0 =", b_0), 
+                    sub= paste("Biais =", round(bias_m, digits=4), 
+                    " Variance=", round(variance_m, digits=4), " MSE=",
+                    round(mse_m, digits=4)))
     
     
     hist(estimation_q_l,breaks=10, main = "")
     title(main = paste("Histogram of estimated q_l\n","n =", n, " N =", 
-        nbr_replication, " a_0 =", a_0, " b_0 =", b_0), 
-        sub= paste("Biais =", round(bias_l, digits=4)  , 
-        " Variance=", round(variance_l, digits=4), 
-        " MSE=", round(mse_l, digits=4)))
+                    nbr_replication, " a_0 =", a_0, " b_0 =", b_0), 
+                    sub= paste("Biais =", round(bias_l, digits=4), 
+                     " Variance=", round(variance_l, digits=4), " MSE=",
+                     round(mse_l, digits=4)))
     boxplot(estimation_q_l, xlab = "q_l" , main = "", ylab="Value")   
     title(main = paste("Boxplot of estimated q_l\n","n =", n, " N =", 
-        nbr_replication, " a_0 =", a_0, " b_0 =", b_0), 
-        sub= paste("Biais =", round(bias_l, digits=4)  , " Variance=", 
-        round(variance_l, digits=4), " MSE=", round(mse_l, digits=4)))
+                    nbr_replication, " a_0 =", a_0, " b_0 =", b_0), 
+                    sub= paste("Biais =", round(bias_l, digits=4), 
+                    " Variance=", round(variance_l, digits=4), " MSE=",
+                    round(mse_l, digits=4)))
     
   }
   
@@ -197,7 +201,5 @@ plot(n_value,results[2,3,],xlab="n",ylab="Variance",main="Variance of q_l") #q_l
 plot(n_value,results[3,1,],xlab="n",ylab="MSE",main="MSE of q_s") #q_s
 plot(n_value,results[3,2,],xlab="n",ylab="MSE",main="MSE of q_m") #q_m
 plot(n_value,results[3,3,],xlab="n",ylab="MSE",main="MSE of q_l") #q_l
-
-##
 
 
