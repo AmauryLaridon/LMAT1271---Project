@@ -42,7 +42,7 @@ q_s <- function(T_i) {
   size <- length(T_i)
   T_sort <- sort(T_i)
   return (T_sort[ceiling(0.95*size)]+(T_sort[floor(0.95*size)]
-                        -T_sort[ceiling(0.95*size)])*(0.95*n-ceiling(0.95*n)))
+                        -T_sort[ceiling(0.95*size)])/2)
 }
 
 #Estimator of a_m and b_m, using the method of moments
