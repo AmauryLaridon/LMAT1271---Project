@@ -171,3 +171,29 @@ generate_sample()
 #1.3.b et 1.3.c
 generate_estimation_q_p(TRUE)
 
+#1.3.d
+n_value <- c(20,50,100,250,400)
+results <- array(0, dim = c(3, 3, length(n_value)))
+for (i in 1:length(n_value)) {
+  n<-n_value[i]
+  results[,,i]=t(generate_estimation_q_p(FALSE))
+}
+
+#Graphiques
+
+print(results[,,])
+
+#Biais
+plot(n_value,results[1,1,],xlab="n",ylab="Bias",main="Bias of q_s") #q_s
+plot(n_value,results[1,2,],xlab="n",ylab="Bias",main="Bias of q_m") #q_m
+plot(n_value,results[1,3,],xlab="n",ylab="Bias",main="Bias of q_l") #q_l
+
+#Variance
+plot(n_value,results[2,1,],xlab="n",ylab="Variance",main="Variance of q_s") #q_s
+plot(n_value,results[2,2,],xlab="n",ylab="Variance",main="Variance of q_m") #q_m
+plot(n_value,results[2,3,],xlab="n",ylab="Variance",main="Variance of q_l") #q_l
+
+#MSE
+plot(n_value,results[3,1,],xlab="n",ylab="MSE",main="MSE of q_s") #q_s
+plot(n_value,results[3,2,],xlab="n",ylab="MSE",main="MSE of q_m") #q_m
+plot(n_value,results[3,3,],xlab="n",ylab="MSE",main="MSE of q_l") #q_l
