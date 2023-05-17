@@ -22,6 +22,12 @@ dataproject <- read.csv("~/Bureau/LMAT1271 - Calcul des probabilités et analyse
 
 lm1 <- lm(Y~X, data = dataproject) #Calcul et création d'un modèle de regression
                                    #linéaire
+                                   
+fuel <- dataproject$Y
+hrspw <- dataproject$X
+model <- lm(fuel ~ hrspw)
+new <- data.frame(hrspw=1000)
+predict(model,new, interval="confidence") 
 
 
 
