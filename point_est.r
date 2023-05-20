@@ -41,7 +41,7 @@ q_p <- function(p) {
 q_s <- function(T_i) {
   size <- length(T_i)
   T_sort <- sort(T_i)
-  return (T_sort[ceiling(0.95*size)]+T_sort[floor(0.95*size)])/2
+  return ((T_sort[ceiling(0.95*size)]+T_sort[floor(0.95*size)])/2)
 }
 
 #Estimator of a_m and b_m, using the method of moments
@@ -183,23 +183,24 @@ for (i in 1:length(n_value)) {
   results[,,i]=t(generate_estimation_q_p(FALSE))
 }
 
+results
 #Graphiques
 
 print(results[3,,])
 
 #Biais
 plot(n_value,results[1,1,],xlab="n",ylab="Bias",main="Bias of q_s") #q_s
-plot(n_value,results[1,2,],xlab="n",ylab="Bias",main="Bias of q_m") #q_m
-plot(n_value,results[1,3,],xlab="n",ylab="Bias",main="Bias of q_l") #q_l
+plot(n_value,results[2,1,],xlab="n",ylab="Bias",main="Bias of q_m") #q_m
+plot(n_value,results[3,1,],xlab="n",ylab="Bias",main="Bias of q_l") #q_l
 
 #Variance
-plot(n_value,results[2,1,],xlab="n",ylab="Variance",main="Variance of q_s") #q_s
+plot(n_value,results[1,2,],xlab="n",ylab="Variance",main="Variance of q_s") #q_s
 plot(n_value,results[2,2,],xlab="n",ylab="Variance",main="Variance of q_m") #q_m
-plot(n_value,results[2,3,],xlab="n",ylab="Variance",main="Variance of q_l") #q_l
+plot(n_value,results[3,2,],xlab="n",ylab="Variance",main="Variance of q_l") #q_l
 
 #MSE
-plot(n_value,results[3,1,],xlab="n",ylab="MSE",main="MSE of q_s") #q_s
-plot(n_value,results[3,2,],xlab="n",ylab="MSE",main="MSE of q_m") #q_m
+plot(n_value,results[1,3,],xlab="n",ylab="MSE",main="MSE of q_s") #q_s
+plot(n_value,results[2,3,],xlab="n",ylab="MSE",main="MSE of q_m") #q_m
 plot(n_value,results[3,3,],xlab="n",ylab="MSE",main="MSE of q_l") #q_l
 
 n_values <- c(20,100,400)
@@ -210,3 +211,4 @@ for (i in 1:3) {
   estimation_q_l <- estimation_q_p[3,]
   hist(factor*(estimation_q_l-q_p_true),main=paste("Histogram of n^(1/2)(q_l-q_0.95) for n=",n),xlabel="n^(1/2)(q_l-q_0.95)")
 }
+
