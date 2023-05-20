@@ -202,4 +202,11 @@ plot(n_value,results[3,1,],xlab="n",ylab="MSE",main="MSE of q_s") #q_s
 plot(n_value,results[3,2,],xlab="n",ylab="MSE",main="MSE of q_m") #q_m
 plot(n_value,results[3,3,],xlab="n",ylab="MSE",main="MSE of q_l") #q_l
 
-
+n_values <- c(20,100,400)
+for (i in 1:3) {
+  n <- n_values[i]
+  factor <- sqrt(n)
+  estimation_q_p <- replicate(nbr_replication,generate_sample())
+  estimation_q_l <- estimation_q_p[3,]
+  hist(factor*(estimation_q_l-q_p_true),main=paste("Histogram of n^(1/2)(q_l-q_0.95) for n=",n),xlabel="n^(1/2)(q_l-q_0.95)")
+}
