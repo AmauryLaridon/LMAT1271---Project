@@ -14,10 +14,10 @@ set.seed(2023) # génération clef aléatoire
 ##### Chargement librairies #####
 #install.packages("lattice")
 #install.packages("ggplot2")
-install.packages("esquisse")
+#install.packages("esquisse")
 library(lattice)
 library(ggplot2)
-library(esquisse)
+#library(esquisse)
 
 ######################### - Partie 2 Regression - ###########################
 
@@ -37,24 +37,15 @@ mean_fuel <- mean(fuel)
 
 ## Calcul de S_xx ##
 
-S_xx <- 0
-for (i in range(length(hrspw))){
-  S_xx = S_xx + (hrspw[i]-mean_hp)^2
-}
+S_xx <- sum((hrspw - mean_hp)^2)
 
 ## Calcul de S_xy ##
 
-S_xy <- 0
-for (i in range(length(fuel))){
-  S_xy = S_xy + ((hrspw[i]-mean_hp)*(fuel[i]-mean_fuel))
-}
+S_xy <- sum((hrspw-mean_hp)*(fuel-mean_fuel))
 
 ## Calcul de S_yy ##
 
-S_yy <- 0
-for (i in range(length(fuel))){
-  S_yy = S_yy + (fuel[i]-mean_fuel)^2
-}
+S_yy <- sum((fuel-mean_fuel)^2)
 
 ## Calcul des estimateurs de beta_0 et beta_1 à l'aide de leur définition par la méthode MCO ##
 
@@ -65,11 +56,33 @@ print(beta_1)
 
 ## Calcul de l'estimateur de la variance des erreurs ## 
 
-var_err <- (S_yy-(beta_1*S_xx))/(n-2)
+var_err <- (S_yy-(beta_1*S_xy))/(n-2)
+std_err <- sqrt(var_err)
 
 ## Création du modèle linéaire sur base des paramètres estimés ## 
 
 lm <- beta_0+(beta_1*hrspw)
+
+## Calcul des estimateurs de la variance de beta_0 et beta_1 à l'aide de leur définition par la méthode MCO ##
+
+std_beta_1 <- var_err/S_xx
+
+## Calcul de la statique de test T_obs ## 
+
+T_obs <- ((beta_1 - 0)/(std_beta_1))*sqrt(S_xx)
+
+## Prévision ## 
+
+X.star <- 1000
+Y.star <- beta_0 + beta_1*X.star
+
+## Intervalle de prévision à 95% ##
+
+alpha <- 0.05
+t <- qt(p=alpha/2, df=n-2)
+
+IP_plus <- beta_0+(beta_1*X.star)+(t*std_err)*sqrt(1+(1/n)+((X.star-mean_hp)^2)/S_xx)
+IP_min <- beta_0+(beta_1*X.star)-(t*std_err)*sqrt(1+(1/n)+((X.star-mean_hp)^2)/S_xx)
 
 ## Affichage ## 
 
@@ -78,12 +91,13 @@ xyplot((beta_0+(beta_1*hrspw))~hrspw)
 
 ## Verification à l'aide de la fonction déjà implémentée lm() ##
 
-lm1 <- lm(Y~X, data = dataproject) #Calcul et création d'un modèle de regression
+lm1 <- lm(formula = fuel~hrspw, data = dataproject) #Calcul et création d'un modèle de regression
                                    #linéaire
-                                  
+summary(lm1)
+
 model <- lm(fuel ~ hrspw)
-#new <- data.frame(hrspw=1000)
-#predict(model,new, interval="confidence") 
+new <- data.frame(hrspw=1000)
+predict(lm1,new, interval="confidence") 
 
 
 
