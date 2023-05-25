@@ -69,7 +69,7 @@ std_beta_1 <- var_err/S_xx
 
 ## Calcul de la statique de test T_obs ## 
 
-T_obs <- ((beta_1 - 0)/(std_beta_1))*sqrt(S_xx)
+T_obs <- ((beta_1 - 0)/(std_err))*sqrt(S_xx)
 
 ## Prévision ## 
 
