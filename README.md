@@ -12,6 +12,8 @@ The R script used for the first part of the project related to *Point Estimation
 
 The R script used for the second part of the project related to *Regression* is the *regression.R* file. 
 
+The R script used for all the parts of the project is the *script.R*
 
-The project report can be found at the following adress : https://fr.overleaf.com/read/jsmknmcxzwjm and in the *LMAT1271__Projet.pdf* file. 
+
+The project report can be found in the *LMAT1271_Projet.pdf* file. 
 
