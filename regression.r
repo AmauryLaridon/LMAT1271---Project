@@ -79,10 +79,15 @@ Y.star <- beta_0 + beta_1*X.star
 ## Intervalle de prévision à 95% ##
 
 alpha <- 0.05
-t <- qt(p=alpha/2, df=n-2)
+t <- qt(p=alpha/2, df=n-2, lower.tail = F)
 
 IP_plus <- beta_0+(beta_1*X.star)+(t*std_err)*sqrt(1+(1/n)+((X.star-mean_hp)^2)/S_xx)
 IP_min <- beta_0+(beta_1*X.star)-(t*std_err)*sqrt(1+(1/n)+((X.star-mean_hp)^2)/S_xx)
+
+## Calcul p valeur ##
+
+p_value <- 2*(pt(-T_obs,df=98))
+print(p_value)
 
 ## Affichage ## 
 
